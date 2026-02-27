@@ -9,18 +9,23 @@ const postSehema = new mongoose.Schema(
         },
         likes:{
             type:Number,
-            required:true,
             default:0
         },
         shares:{
             type:Number,
-            required:true,
             defualt:0
         },
         reposts:{
             type:Number,
-            required:true,
             default:0
+        },
+        createdAt:{
+            type:Date,
+            default:Date.now(),
+        },
+        createdBy:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"user"
         }
 
 

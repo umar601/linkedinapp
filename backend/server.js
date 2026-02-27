@@ -8,6 +8,9 @@ const middleware = require("./middlewares/middleware.js")
 const databaseConnection = require("./connection.js")
 
 const userRouter = require("./routes/userroutes.js");
+const postRouter = require("./routes/postroutes.js");
+
+// console.log(postRouter)
 
 
 
@@ -17,8 +20,8 @@ databaseConnection(url);
 
 middleware(app)
 
-app.use("/",userRouter)
-
+app.use("/",userRouter);
+app.use("/",postRouter);
 
 // app.use("/",(req,res)=>{
 
