@@ -1,5 +1,22 @@
 const post = require("../models/postmodel");
 const user = require("../models/usermodel");
+const jwt = require("jsonwebtoken");
+
+// async function verifyToken(req,res,next){
+
+//     try{
+
+//         const token = req.headers.authorization.split(" ")[1];
+//         const decoded = jwt.verify(token,"secretkey");
+//         req.user = decoded;
+//         next();
+
+//     }
+//     catch(err){
+//         next(err);
+//     }
+
+// }
 
 async function addPost(req,res){
 
@@ -7,7 +24,9 @@ async function addPost(req,res){
     
     try{
     let newpost = await post.insertOne({content:content,createdBy:req.user});
-    //first we have to finc login user then push it into his data
+
+    console.log(req.user)
+    //first we have to find login user then push it into his data
     
     // let userPostUpdate=user.posts.push(newpost);
     // await userPostUpdate.save();

@@ -12,7 +12,11 @@ async function userSignUp(req,res){
 
     const hashedPassword = await bcrypt.hash(password,10);
 
-    await user.insertOne({username:username,password:hashedPassword});
+    let newUser = await user.insertOne({username:username,password:hashedPassword});
+
+    console.log(newUser)
+
+    req.user = newUser;
 
     const token = jwt.sign(
     {
@@ -39,12 +43,17 @@ async function userLogin(req,res){
 
    try{
    let findUser = await user.findOne({username:username});
+
+
    if(findUser){
     
     let isValid = await bcrypt.compare(password,findUser.password);
     if(!isValid){
         return res.send("password is wrong");
     }
+  
+    res.locals.user = findUser;
+
     const token=jwt.sign(
     {
         username:username,
@@ -60,6 +69,7 @@ async function userLogin(req,res){
     res.send("user not found")
    }
     }catch(err){
+        console.log(err)
         res.send("found error in fetching")
     }
 
