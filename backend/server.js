@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 8080;
+const port = 3000;
 
 
 const url = "mongodb://127.0.0.1:27017/linkenapp"
@@ -22,6 +22,10 @@ middleware(app)
 
 app.use("/",userRouter);
 app.use("/",postRouter);
+
+// app.get("/test",(req,res)=>{
+//     res.send("working")
+// })
 
 // app.use("/",(req,res)=>{
 
