@@ -1,28 +1,52 @@
-const {addPost} = require("../controllers/postcontroller");
+const {addPost,deletePost} = require("../controllers/postcontroller");
 const express = require("express");
 const postRouter = express.Router();
+const jwt = require("jsonwebtoken");
 
-async function verifyToken(req,res,next){
 
-    try{
+function verifyToken(req, res, next) {
 
-        if(!req.headers.authorization){
-            return res.status(401).send("Unauthorized: No token provided");
-        }
-        const token = req.headers.authorization.string().split(" ")[1];
-        const decoded = jwt.verify(token,"secretkey");
+    // const authHeader = req.headers.authorization;
+    
+    // console.log(req.headers)
+
+    // console.log(req.headers.authorization)
+
+    // if (!authHeader) {
+    //     return res.status(401).send("Unauthorized: No token provided");
+    // }
+
+    // const token = authHeader.split(" ")[1];
+    // console.log(token)
+
+    // console.log(req.cookies.token)
+
+    if(!req.cookies.token||req.cookies.token=="undefined"){
+
+        return res.status(401).send("Unauthorized: No token provided");
+    }
+
+    try {
+        // console.log(req.cookies.token)
+        const decoded = jwt.verify(req.cookies.token, "secretkey");
+
+        // console.log("decoded",decoded)
+
         req.user = decoded;
-        next();
+        next();  
 
+    } catch (err) {
+        return res.status(401).send("Invalid token");
     }
-    catch(err){
-        next(err);
-    }
-
 }
 
 
 postRouter
-.post("/post",addPost)
+.route("/post")
+.post(verifyToken,addPost)
+
+postRouter
+.delete("/post/:id",verifyToken,deletePost)
+
 
 module.exports = postRouter;
