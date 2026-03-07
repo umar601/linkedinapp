@@ -9,7 +9,8 @@ const databaseConnection = require("./connection.js")
 
 const userRouter = require("./routes/userroutes.js");
 const postRouter = require("./routes/postroutes.js");
-const commentRouter = require("./routes/commentroutes.js")
+const commentRouter = require("./routes/commentroutes.js");
+const connectionRouter = require("./routes/connectionRoutes.js");
 
 // console.log(commentRouter)
 
@@ -24,6 +25,7 @@ middleware(app)
 app.use("/",userRouter);
 app.use("/",postRouter);
 app.use("/",commentRouter);
+app.use("/",connectionRouter);
 
 // app.get("/test",(req,res)=>{
 //     res.send("working")
