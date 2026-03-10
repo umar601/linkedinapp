@@ -2,6 +2,7 @@ const user = require("../models/usermodel");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+
 async function userSignUp(req,res){
 
     let {username,password}=req.body;
@@ -14,18 +15,22 @@ async function userSignUp(req,res){
 
     let newUser = await user.insertOne({username:username,password:hashedPassword});
 
-    console.log(newUser)
-
-    req.user = newUser;
+    // console.log(newUser)
 
     const token = jwt.sign(
     {
-        username:username,
-        password:password
+        id:newUser.insertedId,
+        username:username
     },
     "secretkey",
     { expiresIn: "1h" }
 )
+    res.cookie("token",token,
+        {
+        expiresIn:24*60*60*60,
+        httpOnly:true
+        }
+    )
 
     // console.log(username,password)
     res.json(token)
@@ -38,6 +43,8 @@ async function userSignUp(req,res){
 }
 
 async function userLogin(req,res){
+
+    // console.log(req.body.password)
     
    let {username,password} = req.body;
 
@@ -51,17 +58,27 @@ async function userLogin(req,res){
     if(!isValid){
         return res.send("password is wrong");
     }
-  
-    res.locals.user = findUser;
+
+
+    // console.log(req.user)
 
     const token=jwt.sign(
     {
-        username:username,
-        password:password
+        id:findUser._id,
+        username:findUser.username
     },
     "secretkey",
     { expiresIn: "1h" }
     )
+
+    res.cookie("token",token,
+        {
+        expiresIn:24*60*60*60,
+        httpOnly:true
+        }
+    )
+
+    
     res.send(token)
 
    }

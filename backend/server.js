@@ -3,6 +3,7 @@ const app = express();
 const port = 3000;
 
 
+
 const url = "mongodb://127.0.0.1:27017/linkenapp"
 const middleware = require("./middlewares/middleware.js")
 const databaseConnection = require("./connection.js")
@@ -21,6 +22,8 @@ const connectionRouter = require("./routes/connectionRoutes.js");
 databaseConnection(url);
 
 middleware(app)
+
+
 
 app.use("/",userRouter);
 app.use("/",postRouter);

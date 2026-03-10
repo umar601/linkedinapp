@@ -16,7 +16,24 @@ const userSchema = new mongoose.Schema(
                 ref:"post"
             }                 
             
-        ]
+        ],
+        comments:[
+            {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"comment"
+
+            }
+        ],
+        connections:[
+            {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"connection"
+            }
+        ],
+        profilePicture:{
+            type:String,
+            default:"https://res.cloudinary.com/dlqj8h5u9/image/upload/v1700000000/linkenidapp/default_profile_picture.png"
+        }
     }
 )
 

@@ -18,7 +18,6 @@ const connectionSchema = new mongoose.Schema(
         status:{
             type:Boolean,
             default:null,
-            required:true
         }
 
 

@@ -1,8 +1,7 @@
-const {addPost,deletePost,editPost,getAllPosts} = require("../controllers/postcontroller");
 const express = require("express");
-const postRouter = express.Router();
-const jwt = require("jsonwebtoken");
-
+const commentRouter = express.Router();
+const {addComment,deletComment,editComment} = require("../controllers/commentController");
+const jwt = require("jsonwebtoken")
 
 function verifyToken(req, res, next) {
 
@@ -28,6 +27,7 @@ function verifyToken(req, res, next) {
 
     try {
         // console.log(req.cookies.token)
+        // console.log("tyr block")
         const decoded = jwt.verify(req.cookies.token, "secretkey");
 
         // console.log("decoded",decoded)
@@ -36,20 +36,13 @@ function verifyToken(req, res, next) {
         next();  
 
     } catch (err) {
-        return res.status(401).send("Invalid token");
+        return res.status(401).send("Invalid token",req.cookies.token);
     }
 }
 
+commentRouter
+.post("/comment/:id",verifyToken,addComment)
+.delete("/comment/:id",verifyToken,deletComment)
+.patch("/comment/:id",verifyToken,editComment)
 
-postRouter
-.route("/post")
-.post(verifyToken,addPost)
-.get(verifyToken,getAllPosts)
-
-postRouter
-.route("/post/:id")
-.delete(verifyToken,deletePost)
-.patch(verifyToken,editPost);
-
-
-module.exports = postRouter;
+module.exports = commentRouter
