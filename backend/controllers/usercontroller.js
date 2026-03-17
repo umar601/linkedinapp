@@ -36,6 +36,7 @@ async function userSignUp(req,res){
     res.json(token)
     }
     else{
+        
         res.send("user already exist")
     }
 
