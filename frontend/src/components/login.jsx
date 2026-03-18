@@ -5,13 +5,12 @@ import { useNavigate } from "react-router-dom";
 export default function UserLogin(){
 
     let [data,setData] = useState({username:"",password:""});
-    let [loginclick,setLoginClick] = useState(false)
-    let [signclick,setSignClick] = useState(false)
+    let [loading,setLoading] = useState("")
+    let [err,setErr] = useState(false);
+
     let navigate = useNavigate();
 
     function handleOnChnage(event){
-
-        // console.log("callled")
 
         setData({...data,[event.target.name]:event.target.value})
 
@@ -20,31 +19,34 @@ export default function UserLogin(){
     async function handleOnSubmit(event) {
 
         event.preventDefault();
-        // console.log(typeof(login))
-        // console.log("submit  called")
+
+        setLoading(true)
 
         const res = await login(data)
 
-        console.log(res)
+        if(res == "user not found"){
 
-        navigate("/DashBoard")
+            setErr(true)
+            setData({username:"",password:""})
+            setLoading(false)
+
+        }
+        else{
+        // console.log(res)
+
+        navigate("/dashBoard")
+
+        }
         
         
     }
 
-    function onLoginButtonClick(){
 
-        setLoginClick(true)
 
-        navigate("/")
+     function handleButtonClick(event){
 
-    }
 
-     function onSignUpButtonClick(){
-
-        setSignClick(true)
-
-        navigate("/signup")
+        navigate(event.target.value)
 
     }
 
@@ -54,15 +56,17 @@ export default function UserLogin(){
 
     <>
 
-    <button onClick={onLoginButtonClick}>login</button>
-    <button onClick={onSignUpButtonClick}>signup</button>
+    <button value="/login"onClick={handleButtonClick}>login</button>
+    <button value="/signup"onClick={handleButtonClick}>signup</button>
+
+    {err?<p>either password or username is incorrect</p>:null}
 
 
     <form onSubmit={handleOnSubmit} >
         
         <input type="text" placeholder="Enter the username" name="username" value={data.username} onChange={handleOnChnage}/>
         <input type="password" placeholder="Enter the password" name="password" value={data.password} onChange={handleOnChnage}/>
-        <button type="submit">Login</button>
+        <button type="submit">{loading?"Authenticating":"Log In"}</button>
 
     </form>
 

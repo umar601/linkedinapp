@@ -5,7 +5,8 @@ export const login = async (data) => {
     const res = await axiosInstance.post("/login",data);
     return res.data;
   } catch (error) {
-    throw error;
+    
+    return error;
   }
 };
 
@@ -14,6 +15,6 @@ export const signup = async (data) => {
     const res = await axiosInstance.post("/signup",data);
     return res.data;
   } catch (error) {
-    throw error;
+    return error;
   }
 };
