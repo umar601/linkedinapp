@@ -122,9 +122,9 @@ async function editPost(req,res){
 async function getAllPosts(req,res){
 
     try{
-    let fetchedPosts = await post.find({});
+    let fetchedPosts = await post.find({}).populate({path:"createdBy"})
 
-    // console.log(fetchedPosts)
+    // console.log(fetchedPosts[0].createdBy.username)
     res.json(fetchedPosts)
     }catch(err){
         console.log(err)

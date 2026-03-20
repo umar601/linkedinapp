@@ -44,7 +44,7 @@ function verifyToken(req, res, next) {
 postRouter
 .route("/post")
 .post(verifyToken,addPost)
-.get(verifyToken,getAllPosts)
+.get(getAllPosts)
 
 postRouter
 .route("/post/:id")
