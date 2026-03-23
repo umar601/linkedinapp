@@ -124,7 +124,7 @@ async function getAllPosts(req,res){
     try{
     let fetchedPosts = await post.find({}).populate({path:"createdBy"})
 
-    // console.log(fetchedPosts[0].createdBy.username)
+    console.log(fetchedPosts[0].createdBy.username)
     res.json(fetchedPosts)
     }catch(err){
         console.log(err)
