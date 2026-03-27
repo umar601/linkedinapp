@@ -31,10 +31,9 @@ export default function DashBoard(){
     }
 
     // console.log(data)
-
-
     }
 
+    
     useEffect(()=>{
 
         getData();
@@ -50,8 +49,6 @@ export default function DashBoard(){
         {loading?<p>fecthcing posts</p>:null}
 
         <h1>all posts</h1>
-
-        <div  className="comments">all comments</div>
 
         {data.map((item)=>{
 
