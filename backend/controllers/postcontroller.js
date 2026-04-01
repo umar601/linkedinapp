@@ -1,5 +1,6 @@
 const post = require("../models/postmodel");
 const user = require("../models/usermodel");
+
 // async function verifyToken(req,res,next){
 
 //     try{
@@ -122,9 +123,9 @@ async function editPost(req,res){
 async function getAllPosts(req,res){
 
     try{
-    let fetchedPosts = await post.find({}).populate({path:"createdBy"})
+    let fetchedPosts = await post.find({}).populate({path:"comments",populate:{path:"user"}}).populate({path:"createdBy"})
 
-    console.log(fetchedPosts[0].createdBy.username)
+    // console.log(fetchedPosts[0].createdBy)
     res.json(fetchedPosts)
     }catch(err){
         console.log(err)

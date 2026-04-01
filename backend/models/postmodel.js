@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const postSehema = new mongoose.Schema(
     
     {
@@ -26,7 +27,13 @@ const postSehema = new mongoose.Schema(
         createdBy:{
             type:mongoose.Schema.Types.ObjectId,
             ref:"user"
-        }
+        },
+        comments:[
+            {
+                type:mongoose.Schema.Types.ObjectId,
+                ref:"comment"
+            }
+        ]
 
 
 })
