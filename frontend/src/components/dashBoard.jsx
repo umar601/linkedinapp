@@ -29,7 +29,7 @@ export default function DashBoard(){
 
         setLoading(false)
         setErr("error in fetching posts")
-        // console.log("error in fetching",err)
+        console.log("error in fetching",err)
     }
 
     // console.log(data)
